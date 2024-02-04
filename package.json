@@ -1,0 +1,28 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:app": "cd packages/app && npm start",
+    "start:backend": "cd packages/backend && npm start:dev",
+    "start:both": "lerna run start --parallel"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.15",
+    "lerna": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "styled-components": "^6.1.8"
+  }
+}

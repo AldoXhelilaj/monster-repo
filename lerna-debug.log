@@ -1,0 +1,16 @@
+0 silly argv {
+0 silly argv   _: [ 'create' ],
+0 silly argv   lernaVersion: '8.0.2',
+0 silly argv   '$0': '/Users/crispybacon/Desktop/projects/monorepo/node_modules/.bin/lerna',
+0 silly argv   name: 'app'
+0 silly argv }
+1 notice cli v8.0.2
+2 verbose packageConfigs Explicit "packages" configuration found in lerna.json. Resolving packages using the configured glob(s): ["packages/*"]
+3 verbose rootPath /Users/crispybacon/Desktop/projects/monorepo
+4 info versioning independent
+5 error Error: Command failed with exit code 1: git config --get user.name
+5 error     at makeError (/Users/crispybacon/Desktop/projects/monorepo/node_modules/execa/lib/error.js:59:11)
+5 error     at module.exports.sync (/Users/crispybacon/Desktop/projects/monorepo/node_modules/execa/index.js:186:17)
+5 error     at execSync (/Users/crispybacon/Desktop/projects/monorepo/node_modules/@lerna/create/dist/command.js:74:31)
+5 error     at CreateCommand.gitConfig (/Users/crispybacon/Desktop/projects/monorepo/node_modules/@lerna/create/dist/command.js:4084:16)
+5 error     at CreateCommand.initialize (/Users/crispybacon/Desktop/projects/monorepo/node_modules/@lerna/create/dist/command.js:4015:50)
