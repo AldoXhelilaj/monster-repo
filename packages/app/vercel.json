@@ -3,9 +3,9 @@
     "builds": [
       {
         "src": "app/package.json",
-        "use": "@vercel/react",
+        "use": "@vercel/static-build",
         "config": {
-          "distDir": "build"
+          "distDir": "dist"
         }
       },
       {
