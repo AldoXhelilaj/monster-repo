@@ -1,3 +1,38 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-}
+    "version": 2,
+    "builds": [
+      {
+        "src": "app/package.json",
+        "use": "@vercel/react",
+        "config": {
+          "distDir": "build"
+        }
+      },
+      {
+        "src": "backend/package.json",
+        "use": "@vercel/node",
+        "config": {
+          "maxLambdaSize": "50mb"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/.*",
+        "dest": "/backend/dist/main.js"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/app/build/$1"
+      }
+    ],
+    "env": {
+      "DATABASE_URL": "@vercel/postgresql-db-url",
+      "POSTGRES_PRISMA_URL": "@vercel/postgresql-prisma-url",
+      "POSTGRES_USER": "@vercel/postgresql-user",
+      "POSTGRES_PASSWORD": "@vercel/postgresql-password",
+      "POSTGRES_HOST": "@vercel/postgresql-host",
+      "POSTGRES_DATABASE": "@vercel/postgresql-database"
+    }
+  }
+  
