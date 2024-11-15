@@ -1,4 +1,3 @@
-
 import {
   Form,
   useNavigate,
@@ -12,9 +11,6 @@ import InputLabel from '@mui/material/InputLabel';
 import Stack from '@mui/material/Stack';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-
-
-
 
 interface Event {
   name: string;
@@ -156,28 +152,37 @@ export async function action({ request, params }: any) {
     image: data.get('image'),
   };
  
-  let url = 'http://localhost:3005/api/monster';
+  const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3005/api';
+  const url = `${baseUrl}/monster`;
 
-  if (method === 'POST') {
+  try {
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      credentials: 'include', // Important for CORS
+      body: JSON.stringify(eventData),
+    });
 
-    url = 'http://localhost:3005/api/monster';
+    if (response.status === 422) {
+      const error = await response.json();
+      return json(error, { status: 422 });
+    }
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({
+        message: 'Could not save monster.'
+      }));
+      throw json(error, { status: response.status });
+    }
+
+    return redirect('/route2');
+  } catch (error) {
+    if (error instanceof Error) {
+      throw json({ message: error.message }, { status: 500 });
+    }
+    throw json({ message: 'Could not save monster.' }, { status: 500 });
   }
-
-  const response = await fetch(url, {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(eventData),
-  });
-
-  if (response.status === 422) {
-    return response;
-  }
-
-  if (!response.ok) {
-    throw json({ message: 'Could not save event.' }, { status: 500 });
-  }
-
-  return redirect('/route2');
 }

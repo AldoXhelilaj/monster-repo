@@ -1,17 +1,53 @@
-version: "3.9"
-
+version: '3.8'
 services:
   db:
-    image: "postgres"
+    container_name: backend-db-1
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: monster
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_DB: "monster"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   server:
-    build: .
+    container_name: backend-server-1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/monster?schema=public"
+      NODE_ENV: development
     ports:
       - "3005:3005"
-    environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/monster"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - app_network
+    command: >
+      sh -c "
+        echo 'Waiting for database...' &&
+        npx prisma generate &&
+        npx prisma migrate deploy &&
+        npm run start:dev
+      "
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
