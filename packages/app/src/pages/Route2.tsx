@@ -132,7 +132,7 @@ const Route2 = () => {
 }
 
 export async function loadMonsters() {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/monster`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/monster`);
 
     if (!response.ok) {
         throw json({ message: 'Could not fetch monsters.' }, { status: 500 });

@@ -152,8 +152,8 @@ export async function action({ request, params }: any) {
     image: data.get('image'),
   };
  
-  const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:3005/api';
-  const url = `${baseUrl}/monster`;
+  const baseUrl = process.env.REACT_APP_API_URL ;
+  const url = `${baseUrl}/api/monster`;
 
   try {
     const response = await fetch(url, {
