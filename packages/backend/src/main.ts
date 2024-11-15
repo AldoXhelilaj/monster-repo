@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.enableCors({
     credentials: true,
-    origin: ['http://localhost:3005',  'https://monster-repo-app.vercel.app' ],
+    origin: ['http://localhost:3000',  'https://monster-repo-app.vercel.app' ],
     allowedHeaders: ['Content-Type', 'Authorization'],
     exposedHeaders: ['Authorization'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

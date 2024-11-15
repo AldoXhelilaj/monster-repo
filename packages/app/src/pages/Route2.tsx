@@ -132,7 +132,7 @@ const Route2 = () => {
 }
 
 export async function loadMonsters() {
-    const response = await fetch('http://localhost:3005/api/monster');
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/monster`);
 
     if (!response.ok) {
         throw json({ message: 'Could not fetch monsters.' }, { status: 500 });
